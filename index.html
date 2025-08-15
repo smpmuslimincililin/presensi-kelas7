@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMP Muslimin Cililin - PRESENSI SISWA DIGITAL</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Login Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .school-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #2196F3, #4CAF50);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .login-title {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #2196F3, #4CAF50);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            display: none;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            color: #2196F3;
+            font-weight: 700;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .header-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Class Tabs */
+        .class-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .class-tab {
+            padding: 12px 20px;
+            background: #f5f5f5;
+            color: #666;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .class-tab.active {
+            background: #2196F3;
+            color: white;
+        }
+
+        .class-tab:hover {
+            background: #e3f2fd;
+        }
+
+        .class-tab.active:hover {
+            background: #1976d2;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .date-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-input {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1976d2;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            border-radius: 50%;
+            background: white;
+            transform: translate(30px, -30px);
+        }
+
+        .stat-hadir {
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+        }
+
+        .stat-alpha {
+            background: linear-gradient(45deg, #F44336, #EF5350);
+        }
+
+        .stat-sakit {
+            background: linear-gradient(45deg, #FF9800, #FFB74D);
+        }
+
+        .stat-izin {
+            background: linear-gradient(45deg, #2196F3, #42A5F5);
+        }
+
+        .stat-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Student Table */
+        .student-table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .student-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .student-table th,
+        .student-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .student-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .student-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .status-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .status-btn.hadir {
+            background: #e8f5e8;
+            color: #4CAF50;
+            border: 2px solid transparent;
+        }
+
+        .status-btn.hadir.active {
+            background: #4CAF50;
+            color: white;
+            border: 2px solid #4CAF50;
+        }
+
+        .status-btn.alpha {
+            background: #ffebee;
+            color: #f44336;
+            border: 2px solid transparent;
+        }
+
+        .status-btn.alpha.active {
+            background: #f44336;
+            color: white;
+            border: 2px solid #f44336;
+        }
+
+        .status-btn.sakit {
+            background: #fff3e0;
+            color: #ff9800;
+            border: 2px solid transparent;
+        }
+
+        .status-btn.sakit.active {
+            background: #ff9800;
+            color: white;
+            border: 2px solid #ff9800;
+        }
+
+        .status-btn.izin {
+            background: #e3f2fd;
+            color: #2196f3;
+            border: 2px solid transparent;
+        }
+
+        .status-btn.izin.active {
+            background: #2196f3;
+            color: white;
+            border: 2px solid #2196f3;
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: auto;
+            }
+
+            .class-tabs {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-buttons {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="school-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1 class="login-title">SMP MUSLIMIN CILILIN</h1>
+            <p class="login-subtitle">PRESENSI SISWA DIGITAL</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Masukkan username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login 
+                </button>
+                
+                <div id="errorMessage" class="error-message">
+                    Username atau password salah!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="dashboard">
+        <div class="container">
+            <div class="header">
+                <div class="header-top">
+                    <h1 class="header-title">PRESENSI SISWA DIGITAL</h1>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+                <p class="header-subtitle">Kelola Daftar Hadir kehadiran Siswa Dengan Sistem Yang Terintegrasi dan Real-Time.</p>
+            </div>
+
+            <div class="main-content">
+                <!-- Class Tabs -->
+                <div class="class-tabs">
+                    <button class="class-tab active" onclick="switchClass('7A')">Kelas 7A</button>
+                    <button class="class-tab" onclick="switchClass('7B')">Kelas 7B</button>
+                    <button class="class-tab" onclick="switchClass('7C')">Kelas 7C</button>
+                    <button class="class-tab" onclick="switchClass('7D')">Kelas 7D</button>
+                    <button class="class-tab" onclick="switchClass('7E')">Kelas 7E</button>
+                    <button class="class-tab" onclick="switchClass('7F')">Kelas 7F</button>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls">
+                    <input type="text" class="search-box" id="searchBox" placeholder="Cari nama siswa..." onkeyup="searchStudent()">
+                    
+                    <div class="date-group">
+                        <label><strong>Tanggal:</strong></label>
+                        <input type="date" class="date-input" id="attendanceDate">
+                    </div>
+                    
+                    <button class="btn btn-success" onclick="markAllPresent()">
+                        <i class="fas fa-check-circle"></i> Hadir Semua
+                    </button>
+                    
+                    <button class="btn btn-primary" onclick="saveAttendance()">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                    
+                    <button class="btn btn-info" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Ekspor Excel
+                    </button>
+                </div>
+
+                <!-- Statistics -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-hadir">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-number" id="statHadir">0</div>
+                        <div class="stat-label">Hadir</div>
+                    </div>
+                    
+                    <div class="stat-card stat-alpha">
+                        <div class="stat-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-number" id="statAlpha">0</div>
+                        <div class="stat-label">Alpha</div>
+                    </div>
+                    
+                    <div class="stat-card stat-sakit">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="stat-number" id="statSakit">0</div>
+                        <div class="stat-label">Sakit</div>
+                    </div>
+                    
+                    <div class="stat-card stat-izin">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-number" id="statIzin">0</div>
+                        <div class="stat-label">Izin</div>
+                    </div>
+                </div>
+
+                <!-- Student Table -->
+                <div class="student-table-container">
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Siswa</th>
+                                <th>Status Kehadiran</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            <!-- Student rows will be generated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i> <span id="successText">Data berhasil disimpan!</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Sample student data for each class
+        const studentData = {
+            '7A': [
+                'AHMAD FAUZAN', 'AISYAH PUTRI', 'BAYU PRATAMA', 'CITRA DEWI', 'DIMAS RAMADHAN',
+                'ELSA MAHARANI', 'FAHRI ADNAN', 'GITA SARI', 'HANIF AKBAR', 'INDAH PERMATA',
+            ],
+            '7B': [
+                'ABDUL RAHMAN', 'BELLA SAFITRI', 'CHANDRA WIJAYA', 'DIANA PUTRI', 'EKO PRASETYO',
+                'FARAH DIBA', 'GALANG RAMADHAN', 'HILDA PERMATA', 'IRFAN MAULANA', 'JESSICA AMANDA',
+            ],
+            '7C': [
+                'AGUS SALIM', 'BUNGA LESTARI', 'CAHYO UTOMO', 'DINA MARLINA', 'EROS RAMADHAN',
+                'FITRIA SARI', 'GILANG RAMADHAN', 'HANA SAFITRI', 'IVAN SETIAWAN', 'JULIA RAHMAWATI',
+            ],
+            '7D': [
+                'ARIEF RACHMAN', 'BELLA SHINTA', 'CATUR WINDU', 'DIAH PERMATASARI', 'EDI BASKORO',
+                'FAJAR SIDIK', 'GADING MARTEN', 'HILDA VITRIA', 'INDRA BEKTI', 'JENITA JANET',
+            
+            ],
+            '7E': [
+                'AGNES MONICA', 'BUNGA ZAINAL', 'CHAND KELVIN', 'DESY RATNASARI', 'ERICK ISKANDAR',
+                'FIT VITA SARI', 'GIBRAN MAULANA', 'HESTI PURWADINATA', 'IGUN WIGUNAWAN', 'JESSICA ISKANDAR',
+            ],
+            '7F': [
+                'AMANDA MANOPO', 'BRYAN DOMANI', 'CUT SYIFA', 'DINDA HAUW', 'ERIKA CARLINA',
+                'FURRY SETYA', 'GRITTE AGATHA', 'HANA SARASWATI', 'IRISH BELLA', 'JESSICA MILA',
+            ]
+        };
+
+        // Current state
+        let currentClass = '7A';
+        let attendanceData = {};
+
+        // Initialize app
+        window.onload = function() {
+            document.getElementById('attendanceDate').value = getTodayDate();
+            generateStudentTable();
+            loadAttendanceData();
+        };
+
+        // Login functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'elanjaelani' && password === 'english') {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboardPage').style.display = 'block';
+                generateStudentTable();
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 3000);
+            }
+        });
+
+        function logout() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('dashboardPage').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Class switching
+        function switchClass(className) {
+            currentClass = className;
+            
+            // Update active tab
+            document.querySelectorAll('.class-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Regenerate student table
+            generateStudentTable();
+            loadAttendanceData();
+        }
+
+        // Generate student table
+        function generateStudentTable() {
+            const tableBody = document.getElementById('studentTableBody');
+            tableBody.innerHTML = '';
+            
+            const students = studentData[currentClass];
+            students.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${student}</td>
+                    <td>
+                        <div class="status-buttons">
+                            <button class="status-btn hadir active" onclick="setStatus(${index}, 'H')">
+                                <i class="fas fa-check"></i> Hadir
+                            </button>
+                            <button class="status-btn alpha" onclick="setStatus(${index}, 'A')">
+                                <i class="fas fa-times"></i> Alpha
+                            </button>
+                            <button class="status-btn sakit" onclick="setStatus(${index}, 'S')">
+                                <i class="fas fa-user-injured"></i> Sakit
+                            </button>
+                            <button class="status-btn izin" onclick="setStatus(${index}, 'I')">
+                                <i class="fas fa-file-alt"></i> Izin
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            updateStatistics();
+        }
+
+        // Set attendance status
+        function setStatus(studentIndex, status) {
+            const row = document.querySelectorAll('#studentTableBody tr')[studentIndex];
+            const buttons = row.querySelectorAll('.status-btn');
+            
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to selected button
+            const statusMap = { 'H': 0, 'A': 1, 'S': 2, 'I': 3 };
+            buttons[statusMap[status]].classList.add('active');
+            
+            // Store attendance data
+            const date = document.getElementById('attendanceDate').value;
+            if (!attendanceData[currentClass]) {
+                attendanceData[currentClass] = {};
+            }
+            if (!attendanceData[currentClass][date]) {
+                attendanceData[currentClass][date] = {};
+            }
+            attendanceData[currentClass][date][studentIndex] = status;
+            
+            updateStatistics();
+        }
+
+        // Mark all present
+        function markAllPresent() {
+            const rows = document.querySelectorAll('#studentTableBody tr');
+            rows.forEach((row, index) => {
+                const buttons = row.querySelectorAll('.status-btn');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                buttons[0].classList.add('active'); // Hadir button
+                
+                // Store in attendance data
+                const date = document.getElementById('attendanceDate').value;
+                if (!attendanceData[currentClass]) {
+                    attendanceData[currentClass] = {};
+                }
+                if (!attendanceData[currentClass][date]) {
+                    attendanceData[currentClass][date] = {};
+                }
+                attendanceData[currentClass][date][index] = 'H';
+            });
+            
+            updateStatistics();
+            showSuccessMessage('Semua siswa telah dimark hadir!');
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            let hadir = 0, alpha = 0, sakit = 0, izin = 0;
+            
+            const rows = document.querySelectorAll('#studentTableBody tr');
+            rows.forEach(row => {
+                const activeButton = row.querySelector('.status-btn.active');
+                if (activeButton) {
+                    if (activeButton.classList.contains('hadir')) hadir++;
+                    else if (activeButton.classList.contains('alpha')) alpha++;
+                    else if (activeButton.classList.contains('sakit')) sakit++;
+                    else if (activeButton.classList.contains('izin')) izin++;
+                }
+            });
+            
+            document.getElementById('statHadir').textContent = hadir;
+            document.getElementById('statAlpha').textContent = alpha;
+            document.getElementById('statSakit').textContent = sakit;
+            document.getElementById('statIzin').textContent = izin;
+        }
+
+        // Search student
+        function searchStudent() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const rows = document.querySelectorAll('#studentTableBody tr');
+            
+            rows.forEach(row => {
+                const studentName = row.cells[1].textContent.toLowerCase();
+                if (studentName.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Save attendance
+        function saveAttendance() {
+            const date = document.getElementById('attendanceDate').value;
+            if (!date) {
+                alert('Pilih tanggal terlebih dahulu!');
+                return;
+            }
+            
+            // Save to localStorage (in real implementation, this would be Google Sheets)
+            const attendanceKey = `attendance_${currentClass}_${date}`;
+            const currentAttendance = {};
+            
+            const rows = document.querySelectorAll('#studentTableBody tr');
+            rows.forEach((row, index) => {
+                const activeButton = row.querySelector('.status-btn.active');
+                if (activeButton) {
+                    let status = 'H';
+                    if (activeButton.classList.contains('alpha')) status = 'A';
+                    else if (activeButton.classList.contains('sakit')) status = 'S';
+                    else if (activeButton.classList.contains('izin')) status = 'I';
+                    
+                    currentAttendance[index] = status;
+                }
+            });
+            
+            // Store in memory (replace with Google Sheets API in real implementation)
+            if (!attendanceData[currentClass]) {
+                attendanceData[currentClass] = {};
+            }
+            attendanceData[currentClass][date] = currentAttendance;
+            
+            showSuccessMessage(`Data presensi kelas ${currentClass} tanggal ${formatDate(date)} berhasil disimpan!`);
+        }
+
+        // Load attendance data
+        function loadAttendanceData() {
+            const date = document.getElementById('attendanceDate').value;
+            if (!date || !attendanceData[currentClass] || !attendanceData[currentClass][date]) {
+                // Set default to all present
+                markAllPresent();
+                return;
+            }
+            
+            const savedData = attendanceData[currentClass][date];
+            const rows = document.querySelectorAll('#studentTableBody tr');
+            
+            rows.forEach((row, index) => {
+                if (savedData[index]) {
+                    const status = savedData[index];
+                    const buttons = row.querySelectorAll('.status-btn');
+                    
+                    // Remove all active classes
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Set active based on saved status
+                    const statusMap = { 'H': 0, 'A': 1, 'S': 2, 'I': 3 };
+                    buttons[statusMap[status]].classList.add('active');
+                }
+            });
+            
+            updateStatistics();
+        }
+
+        // Export to Excel
+        function exportToExcel() {
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Get current month/year for filename
+            const now = new Date();
+            const monthNames = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            const currentMonth = monthNames[now.getMonth()];
+            const currentYear = now.getFullYear();
+            
+            // Process each class
+            Object.keys(studentData).forEach(className => {
+                const students = studentData[className];
+                const classAttendance = attendanceData[className] || {};
+                
+                // Get all dates for this class
+                const dates = Object.keys(classAttendance).sort();
+                
+                // Create worksheet data
+                const wsData = [];
+                
+                // Header
+                wsData.push(['SMP MUSLIMIN CILILIN']);
+                wsData.push([`DAFTAR HADIR SISWA KELAS ${className}`]);
+                wsData.push([`REKAP BULANAN ${currentMonth.toUpperCase()} ${currentYear}`]);
+                wsData.push([]);
+                
+                // Table header
+                const tableHeader = ['Nama Siswa', ...dates.map(date => formatDateShort(date))];
+                wsData.push(tableHeader);
+                
+                // Student data
+                students.forEach((student, studentIndex) => {
+                    const row = [student];
+                    dates.forEach(date => {
+                        const attendance = classAttendance[date];
+                        const status = attendance && attendance[studentIndex] ? attendance[studentIndex] : 'H';
+                        row.push(status);
+                    });
+                    wsData.push(row);
+                });
+                
+                // Footer
+                wsData.push([]);
+                wsData.push([]);
+                wsData.push(['', '', '', '', '', '', '', '', '', '', '', '', 'Mengetahui']);
+                wsData.push(['', '', '', '', '', '', '', '', '', '', '', '', 'Guru Mata Pelajaran']);
+                wsData.push([]);
+                wsData.push([]);
+                wsData.push(['Catatan:']);
+                wsData.push(['H = Hadir, S = Sakit, I = Izin, A = Alpha']);
+                
+                // Create worksheet
+                const ws = XLSX.utils.aoa_to_sheet(wsData);
+                
+                // Set column widths
+                const colWidths = [{ wch: 25 }]; // Name column
+                dates.forEach(() => colWidths.push({ wch: 8 })); // Date columns
+                ws['!cols'] = colWidths;
+                
+                // Add worksheet to workbook
+                XLSX.utils.book_append_sheet(wb, ws, className);
+            });
+            
+            // Generate filename
+            const filename = `Presensi_SMP_Muslimin_${currentMonth}_${currentYear}.xlsx`;
+            
+            // Save file
+            XLSX.writeFile(wb, filename);
+            
+            showSuccessMessage(`File Excel berhasil diunduh: ${filename}`);
+        }
+
+        // Utility functions
+        function getTodayDate() {
+            const today = new Date();
+            return today.toISOString().split('T')[0];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        function formatDateShort(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            return `${day}-${month}`;
+        }
+
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            
+            successText.textContent = message;
+            successMsg.classList.add('show');
+            
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+
+    </script>
+</body>
+</html>
